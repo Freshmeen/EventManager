@@ -1,0 +1,4 @@
+package-lock.json
+openapitools.json
+dist/
+node_modules/

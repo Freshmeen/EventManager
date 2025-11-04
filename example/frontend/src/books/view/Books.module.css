@@ -1,0 +1,95 @@
+.container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 24px;
+
+    background: #ffffff;
+    border-radius: 16px;
+
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.inputs {
+    display: flex;
+    gap: 10px;
+}
+
+.input {
+    flex: 1;
+    padding: 10px 14px;
+    font-size: 16px;
+
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    outline: none;
+
+    transition: border 0.2s, box-shadow 0.2s;
+}
+
+.input:focus {
+    border-color: #4c7cf5;
+    box-shadow: 0 0 0 2px rgba(76,124,245,0.2);
+}
+
+.button {
+    padding: 10px 16px;
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+
+    background: #4c7cf5;
+    color: white;
+
+    transition: background 0.2s, transform 0.17s;
+}
+
+.button:hover {
+    background: #3d6ae2;
+}
+
+.button:active {
+    transform: scale(0.96);
+}
+
+.books {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.error {
+    margin-top: -4px;
+    padding: 6px 12px;
+
+    background: #ffeded;
+    color: #b90000;
+
+    border: 1px solid #ffb3b3;
+    border-radius: 8px;
+
+    font-size: 14px;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.inputError {
+    border-color: #d93838;
+    box-shadow: 0 0 0 2px rgba(255, 0, 0, 0.15);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

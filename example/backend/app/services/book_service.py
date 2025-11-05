@@ -1,4 +1,4 @@
-from example.backend.app.api.v1.exceptions import EmptyNameException
+from example.backend.app.api.v1.exceptions.empty_name_exception import EmptyNameException
 from example.backend.app.repositories.book_repository import BookRepository
 from sqlalchemy.ext.asyncio import AsyncSession
 

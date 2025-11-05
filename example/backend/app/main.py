@@ -1,13 +1,13 @@
 import os
 import traceback
 
-from fastapi import FastAPI
-from fastapi.responses import FileResponse
+from fastapi import FastAPI, Request
+from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from contextlib import asynccontextmanager
 
 from example.backend.app.api.v1 import api_router
-from example.backend.app.api.v1.exceptions import setup_exception_handlers
+from example.backend.app.api.v1.exceptions.api_exception import APIException
 from example.backend.app.database.session import engine, Base
 
 
@@ -27,8 +27,6 @@ app = FastAPI(title="Books API", lifespan=lifespan, servers=[
     {"url": "http://localhost:8000/"}
 ])
 
-setup_exception_handlers(app)
-
 app.include_router(api_router, prefix="/api/v1")
 
 dist_dir = "example/frontend/dist"
@@ -42,6 +40,15 @@ try:
 except BaseException as e:
     traceback.print_exc()
 
+@app.exception_handler(APIException)
+async def api_exception_handler(_: Request, exc: APIException):
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={
+            "detail": exc.detail,
+            "error_code": exc.error_code
+        }
+    )
 
 @app.get("/{full_path:path}", include_in_schema=False)
 async def serve_frontend(full_path: str):

@@ -1,12 +1,6 @@
-from fastapi.responses import Response, JSONResponse
+from example.backend.app.api.v1.exceptions.api_exception import APIException
 
 
-class EmptyNameException(Exception):
-    pass
-
-
-def empty_name_exception_handler(*_) -> Response:
-    return JSONResponse(
-        status_code=400,
-        content={"message": "Name cannot be empty"},
-    )
+class EmptyNameException(APIException):
+    def __init__(self):
+        super().__init__(status_code=400, detail="Name cannot be empty", error_code="EMPTY_NAME")

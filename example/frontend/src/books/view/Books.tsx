@@ -5,6 +5,9 @@ import useAtoms from "../../common/hooks/useAtoms";
 import useActions from "../../common/hooks/useActions";
 import BookComponent from "./Book";
 import {Book} from "../types";
+import Button from "../../common/components/Button/Button";
+import {ToastException} from "../../common/components/Toast/ToastException";
+import {useToast} from "../../common/components/Toast/ToastContext";
 
 export default function Books() {
     const {atoms, actions} = useBooksModel()
@@ -28,6 +31,8 @@ export default function Books() {
         titleRef.current.value = "";
     };
 
+    const {showToast} = useToast();
+
     return (
         <div className={styles.container}>
             <div className={styles.inputs}>
@@ -38,13 +43,19 @@ export default function Books() {
                     onChange={() => setError("")}
                 />
 
-                <button className={styles.button} onClick={handleAdd}>
+                <Button onClick={handleAdd}>
                     Добавить
-                </button>
+                </Button>
 
-                <button className={styles.button} onClick={loadBooks}>
+                <Button onClick={loadBooks}>
                     Обновить
-                </button>
+                </Button>
+
+                <Button onClick={() => {
+                    showToast("Ещё не реализовано");
+                }} type="negative">
+                    Очистить
+                </Button>
             </div>
 
             {error && <div className={styles.error}>{error}</div>}

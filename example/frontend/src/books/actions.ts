@@ -24,6 +24,6 @@ export const addBookAction = action((ctx, book: Book) => {
             return [...books, book.data];
         })
     }).catch(response => {
-        throw new ToastException(response.response.data.message, "error")
+        throw new ToastException(response.response.data.detail, "error")
     })
 })

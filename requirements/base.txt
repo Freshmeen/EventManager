@@ -4,3 +4,7 @@ sqlalchemy
 sqlalchemy[asyncio]
 aiomysql
 pydantic
+pydantic[email]
+bcrypt
+cryptography
+passlib[bcrypt]

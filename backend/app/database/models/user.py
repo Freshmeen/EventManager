@@ -2,9 +2,9 @@ from datetime import datetime
 from uuid import uuid4
 
 from sqlalchemy import Column, Integer, String, Uuid
-from sqlalchemy.sql.sqltypes import DateTime
 
 from backend.app.database.base import LifecycleMixin, UpdatedAtMixin
+from backend.app.database.models.data import UserPermissionType
 from backend.app.database.session import Base
 
 
@@ -19,7 +19,7 @@ class User(LifecycleMixin, UpdatedAtMixin, Base):
     email = Column(String(255), unique=True, nullable=False)
     avatar_path = Column(String(255), nullable=True)
     points = Column(Integer, nullable=False, default=0)
-    permission = Column(Integer, nullable=False, default='user')
+    permission = Column(UserPermissionType(), nullable=False, default='user')
 
     def __repr__(self):
         return f'User(user_id={self.user_id}, email={self.email})'

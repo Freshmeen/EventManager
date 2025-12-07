@@ -1,1 +1,3 @@
 from .acceptation_status import AcceptationStatus
+from .user_permission import UserPermission
+from .user_permission_type import UserPermissionType

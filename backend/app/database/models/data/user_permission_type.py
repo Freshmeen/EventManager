@@ -1,7 +1,5 @@
-from typing import Any
-
 from sqlalchemy.types import TypeDecorator, Integer
-from pydantic_core import core_schema
+
 from backend.app.database.models.data.user_permission import UserPermission
 
 

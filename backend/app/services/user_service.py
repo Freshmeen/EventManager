@@ -1,17 +1,21 @@
 from typing import Optional, List
 from uuid import UUID
 
+import bcrypt
+
 from backend.app.api.v1.exceptions.users import EmailAlreadyExistsException, UserNotFoundException
 from backend.app.api.v1.models.user import UserCreate, UserUpdate
-from backend.app.repositories.user_repository import UserRepository
 from backend.app.database.models.user import User
-import bcrypt
+from backend.app.repositories.user_repository import UserRepository
+
 
 def hash_password(password: str) -> str:
     return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
+
 def verify_password(plain: str, hashed: str) -> bool:
     return bcrypt.checkpw(plain.encode('utf-8'), hashed.encode('utf-8'))
+
 
 class UserService:
     def __init__(self, user_repo: UserRepository):

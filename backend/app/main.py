@@ -1,14 +1,15 @@
 import os
 import traceback
+from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Request
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
-from contextlib import asynccontextmanager
 
+from backend.app.api.v1 import api_v1_router
 from backend.app.api.v1.exceptions.base import APIException
 from backend.app.database.session import engine, Base
-from backend.app.api.v1 import api_v1_router
+
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
@@ -26,6 +27,7 @@ app = FastAPI(title="Books API", lifespan=lifespan, servers=[
     {"url": "http://localhost:8000/"}
 ])
 
+
 @app.exception_handler(APIException)
 async def custom_http_exception_handler(request: Request, exc: APIException):
     return JSONResponse(
@@ -35,6 +37,7 @@ async def custom_http_exception_handler(request: Request, exc: APIException):
             "error_code": exc.error_code,
         },
     )
+
 
 app.include_router(api_v1_router)
 

@@ -16,5 +16,6 @@ class LifecycleMixin:
     def soft_delete(self):
         self.deleted_at = datetime.now(timezone.utc)
 
+
 class UpdatedAtMixin:
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())

@@ -1,9 +1,8 @@
-from datetime import datetime
-from enum import IntEnum
 from uuid import UUID
-from pydantic import BaseModel, EmailStr, constr, conset, field_serializer
+from uuid import UUID
 
-from backend.app.api.v1.exceptions.users import TooShortPasswordException
+from pydantic import BaseModel, EmailStr, constr, field_serializer
+
 from backend.app.database.models.data import UserPermission
 
 
@@ -31,6 +30,7 @@ class UserBase(UserWithPermissionMixin, BaseModel):
 class UserCreate(UserBase):
     password: str = constr(min_length=8)
 
+
 class UserUpdate(BaseModel):
     first_name: str | None = None
     middle_name: str | None = None
@@ -38,8 +38,10 @@ class UserUpdate(BaseModel):
     email: EmailStr | None = None
     avatar_path: str | None = None
 
+
 class UserResponse(UserBase):
     user_id: UUID
+
 
 class UserCreateResponse(BaseModel):
     user_id: UUID

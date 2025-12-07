@@ -1,9 +1,11 @@
+from uuid import uuid4
+
+from sqlalchemy import Column
+from sqlalchemy.sql.sqltypes import Uuid, String, DateTime, Integer
+
 from backend.app.database.base import UpdatedAtMixin, LifecycleMixin
 from backend.app.database.models.data import AcceptationStatus
 from backend.app.database.session import Base
-from sqlalchemy import Column
-from sqlalchemy.sql.sqltypes import Uuid, String, DateTime, Integer
-from uuid import uuid4
 
 
 class Event(LifecycleMixin, UpdatedAtMixin, Base):

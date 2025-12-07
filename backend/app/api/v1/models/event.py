@@ -15,7 +15,8 @@ class VolunteersValidation:
             raise ValueError("max_volunteers must be greater than min_volunteers")
 
         return max_volunteers
-    
+
+
 class EventIntervalValidation:
     # noinspection PyNestedDecorators
     @field_validator("ends_at", mode='after')
@@ -27,6 +28,7 @@ class EventIntervalValidation:
             raise ValueError("ends_at must be greater than starts_at")
 
         return ends_at
+
 
 class EventBase(VolunteersValidation, EventIntervalValidation, BaseModel):
     name: str
@@ -50,7 +52,6 @@ class EventUpdate(VolunteersValidation, EventIntervalValidation, BaseModel):
     min_volunteers: conint(ge=0) | None = None
     max_volunteers: conint(ge=0) | None = None
     image_path: str | None = None
-
 
 
 class EventCreateResponse(BaseModel):

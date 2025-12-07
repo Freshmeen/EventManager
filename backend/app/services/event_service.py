@@ -29,7 +29,8 @@ class EventService:
     async def list_all(self):
         return await self._repo.get_all()
 
-    async def create(self, event_create: EventCreate, status: EventAcceptationStatus = EventAcceptationStatus.ACCEPTED) -> UUID:
+    async def create(self, event_create: EventCreate,
+                     status: EventAcceptationStatus = EventAcceptationStatus.ACCEPTED) -> UUID:
         event = Event(
             name=event_create.name,
             description=event_create.description,

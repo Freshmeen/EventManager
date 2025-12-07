@@ -1,4 +1,4 @@
-from backend.app.api.v1.exceptions.base.ApiException import APIException
+from backend.app.api.v1.exceptions.base.api_exception import APIException
 from fastapi import status
 
 

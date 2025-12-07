@@ -3,7 +3,7 @@ from typing import Optional, List
 from uuid import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, update
-from backend.app.database.models.user import User
+from backend.app.database.models import User
 from backend.app.repositories.base import BaseRepository
 
 class UserRepository(BaseRepository[User]):
@@ -11,7 +11,7 @@ class UserRepository(BaseRepository[User]):
         super().__init__(User, session)
 
     async def get_by_id(self, user_id: UUID) -> Optional[User]:
-        result = await self.session.execute(select(User).where(User.user_id == user_id))
+        result = await self.session.execute(select(User).where(User.user_id == user_id, User.deleted_at.is_(None)))
         return result.scalar_one_or_none()
 
     async def get_by_email(self, email: str) -> Optional[User]:
@@ -28,18 +28,7 @@ class UserRepository(BaseRepository[User]):
         await self.session.refresh(user)
         return user.user_id
 
-    async def update(self, user_id: UUID, **kwargs) -> Optional[User]:
-        await self.session.execute(
-            update(User)
-            .where(User.user_id == user_id, User.deleted_at.is_(None))
-            .values(**kwargs, updated_at=datetime.now())
-        )
-        updated = await self.get_by_id(user_id)
-        return updated
-
     async def delete(self, user_id: UUID):
-        await self.session.execute(
-            update(User)
-            .where(User.user_id == user_id, User.deleted_at.is_(None))
-            .values(deleted_at=datetime.now())
-        )
+        user = await self.get_by_id(user_id)
+        user.soft_delete()
+        await self.session.flush()

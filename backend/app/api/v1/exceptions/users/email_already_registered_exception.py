@@ -1,4 +1,4 @@
-from backend.app.api.v1.exceptions.base.BadRequestException import BadRequestException
+from backend.app.api.v1.exceptions.base import BadRequestException
 
 
 class EmailAlreadyExistsException(BadRequestException):

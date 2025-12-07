@@ -1,5 +1,4 @@
-from backend.app.api.v1.exceptions.base.BadRequestException import BadRequestException
-
+from backend.app.api.v1.exceptions.base import BadRequestException
 
 class TooShortPasswordException(BadRequestException):
     def __init__(self):

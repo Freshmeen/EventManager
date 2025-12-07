@@ -2,11 +2,10 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from backend.app.api.v1.exceptions.UserNotFoundException import UserNotFoundException
 from backend.app.database.session import get_db
 from backend.app.repositories.user_repository import UserRepository
 from backend.app.services.user_service import UserService
-from backend.app.api.v1.models.user import UserCreate, UserRead, UserUpdate, UserCreateResponse
+from backend.app.api.v1.models.user import UserCreate, UserResponse, UserUpdate, UserCreateResponse
 
 router = APIRouter(prefix="/users", tags=["users"])
 
@@ -32,23 +31,20 @@ async def create_user(
 
 @router.get(
     "/{user_id}",
-    response_model=UserRead,
+    response_model=UserResponse,
     summary="Get user by ID"
 )
-async def read_user(
+async def get_user(
         user_id: UUID,
         service: UserService = Depends(get_user_service)
 ):
-    user = await service.get_by_id(user_id)
-    if not user:
-        raise UserNotFoundException(user_id)
-    return user
+    return await service.get_by_id(user_id)
 
 
 @router.get(
     "/",
-    response_model=list[UserRead],
-    summary="List all active users"
+    response_model=list[UserResponse],
+    summary="List all users"
 )
 async def list_users(service: UserService = Depends(get_user_service)):
     return await service.list_all()
@@ -56,7 +52,7 @@ async def list_users(service: UserService = Depends(get_user_service)):
 
 @router.patch(
     "/{user_id}",
-    response_model=UserRead,
+    status_code=status.HTTP_204_NO_CONTENT,
     summary="Update user partially"
 )
 async def update_user(
@@ -64,16 +60,13 @@ async def update_user(
         user_update: UserUpdate,
         service: UserService = Depends(get_user_service)
 ):
-    user = await service.update(user_id, user_update)
-    if not user:
-        raise UserNotFoundException(user_id)
-    return user
+    await service.update(user_id, user_update)
 
 
 @router.delete(
     "/{user_id}",
-    status_code=status.HTTP_200_OK,
-    summary="Soft-delete a user"
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Delete user"
 )
 async def delete_user(
         user_id: UUID,

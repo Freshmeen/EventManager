@@ -3,7 +3,10 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from backend.app.api.v1.deps.auth import get_current_user, auth_required
 from backend.app.api.v1.models.event import EventCreateResponse, EventCreate, EventResponse, EventUpdate
+from backend.app.database.models import User
+from backend.app.database.models.data import UserPermission
 from backend.app.database.session import get_db
 from backend.app.repositories.event_repository import EventRepository
 from backend.app.services.event_service import EventService
@@ -20,7 +23,8 @@ def get_event_service(session: AsyncSession = Depends(get_db)) -> EventService:
     "/",
     response_model=EventCreateResponse,
     status_code=status.HTTP_201_CREATED,
-    summary="Create a new event"
+    summary="Create a new event",
+    dependencies=[Depends(auth_required([UserPermission.EVENT_CREATOR]))]
 )
 async def create_event(
         event_in: EventCreate,
@@ -39,6 +43,7 @@ async def create_event(
 async def suggest_event(
         event_in: EventCreate,
         service: EventService = Depends(get_event_service),
+        _: User = Depends(get_current_user),
 ):
     event_id = await service.suggest(event_in)
     return EventCreateResponse(event_id=event_id)
@@ -61,6 +66,7 @@ async def get_event(
     "/{event_id}/accept",
     status_code=status.HTTP_204_NO_CONTENT,
     summary="Accept an event",
+    dependencies=[Depends(auth_required([UserPermission.EVENT_CREATOR]))]
 )
 async def accept_event(
         event_id: UUID,
@@ -73,6 +79,7 @@ async def accept_event(
     "/{event_id}/reject",
     status_code=status.HTTP_204_NO_CONTENT,
     summary="Accept an event",
+    dependencies=[Depends(auth_required([UserPermission.EVENT_CREATOR]))]
 )
 async def reject_event(
         event_id: UUID,
@@ -95,11 +102,12 @@ async def list_events(service: EventService = Depends(get_event_service)):
     "/{event_id}",
     status_code=status.HTTP_204_NO_CONTENT,
     summary="Update event partially",
+    dependencies=[Depends(auth_required([UserPermission.EVENT_CREATOR]))]
 )
 async def update_event(
         event_id: UUID,
         event_update: EventUpdate,
-        service: EventService = Depends(get_event_service)
+        service: EventService = Depends(get_event_service),
 ):
     await service.update(event_id, event_update)
 
@@ -107,10 +115,11 @@ async def update_event(
 @router.delete(
     "/{event_id}",
     status_code=status.HTTP_204_NO_CONTENT,
-    summary="Delete event"
+    summary="Delete event",
+    dependencies=[Depends(auth_required([UserPermission.EVENT_CREATOR]))]
 )
 async def delete_event(
         event_id: UUID,
-        service: EventService = Depends(get_event_service)
+        service: EventService = Depends(get_event_service),
 ):
     await service.delete(event_id)

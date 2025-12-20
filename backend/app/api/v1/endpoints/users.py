@@ -7,6 +7,8 @@ from backend.app.api.v1.models.user import UserCreate, UserResponse, UserUpdate,
 from backend.app.database.session import get_db
 from backend.app.repositories.user_repository import UserRepository
 from backend.app.services.user_service import UserService
+from backend.app.api.v1.deps.auth import get_current_user
+
 
 router = APIRouter(prefix="/users", tags=["users"])
 
@@ -74,3 +76,8 @@ async def delete_user(
         service: UserService = Depends(get_user_service)
 ):
     await service.delete(user_id)
+
+@router.get("/me")
+async def me(user=Depends(get_current_user)):
+    return user
+

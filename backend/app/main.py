@@ -42,20 +42,33 @@ async def custom_http_exception_handler(request: Request, exc: APIException):
 app.include_router(api_v1_router)
 
 dist_dir = "frontend/dist"
-index_file = os.path.join(dist_dir, "index.html")
 public_dir = "frontend/public"
+index_file = os.path.join(dist_dir, "index.html")
 
-app.mount("/public", StaticFiles(directory=public_dir), name="public")
+if os.path.exists(public_dir):
+    app.mount("/public", StaticFiles(directory=public_dir), name="public")
+else:
+    print(f"⚠️ Warning: Public directory '{public_dir}' not found. Static files disabled.")
 
-try:
-    app.mount("/assets", StaticFiles(directory=os.path.join(dist_dir, "assets")), name="assets")
-except BaseException as e:
-    traceback.print_exc()
-
+assets_dir = os.path.join(dist_dir, "assets")
+if os.path.exists(assets_dir):
+    try:
+        app.mount("/assets", StaticFiles(directory=assets_dir), name="assets")
+    except Exception:
+        traceback.print_exc()
+else:
+    print(f"⚠️ Warning: Assets directory '{assets_dir}' not found.")
 
 @app.get("/{full_path:path}", include_in_schema=False)
 async def serve_frontend(full_path: str):
     if full_path.startswith("api"):
         from fastapi import HTTPException
         raise HTTPException(status_code=404, detail="API route not found")
+
+    if not os.path.exists(index_file):
+        return JSONResponse(
+            status_code=404,
+            content={"detail": "Frontend not build or index.html not found"}
+        )
+
     return FileResponse(index_file)

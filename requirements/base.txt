@@ -10,3 +10,6 @@ bcrypt
 cryptography
 passlib[bcrypt]
 alembic
+pytest
+pytest-asyncio
+httpx

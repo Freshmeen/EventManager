@@ -13,3 +13,4 @@ alembic
 pytest
 pytest-asyncio
 httpx
+python-jose

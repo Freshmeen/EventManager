@@ -32,7 +32,7 @@ class EventRepository(BaseRepository[Event]):
         event.soft_delete()
         await self.session.flush()
 
-    async def get_by_time_interval(self, since: datetime = None, until: datetime = None):
+    async def list_by_time_interval(self, since: datetime = None, until: datetime = None):
         stmt = select(Event)
 
         conditions = []

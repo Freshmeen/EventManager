@@ -1,0 +1,27 @@
+.button {
+    height: 36px;
+    border-radius: 18px;
+    font-size: 16px;
+    font-weight: 500;
+    outline: none;
+    border: none;
+    font-family: var(--default-font), sans-serif;
+    cursor: pointer;
+}
+
+.button:hover {
+    filter: brightness(0.95);
+}
+
+.button:active {
+    filter: brightness(0.9);
+}
+
+.button span {
+    padding: 0 24px;
+}
+
+.button:disabled {
+    filter: none;
+    cursor: default;
+}

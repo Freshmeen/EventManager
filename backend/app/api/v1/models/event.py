@@ -11,7 +11,8 @@ class VolunteersValidation:
     def check_min_max_volunteers(cls, max_volunteers, info: ValidationInfo):
         min_volunteers = info.data.get("min_volunteers")
 
-        if isinstance(min_volunteers, int) and isinstance(min_volunteers, int) and min_volunteers > max_volunteers:
+        print(max_volunteers, min_volunteers)
+        if isinstance(min_volunteers, int) and isinstance(max_volunteers, int) and min_volunteers > max_volunteers:
             raise ValueError("max_volunteers must be greater than min_volunteers")
 
         return max_volunteers
@@ -38,6 +39,12 @@ class EventBase(VolunteersValidation, EventIntervalValidation, BaseModel):
     min_volunteers: conint(ge=0) | None = None
     max_volunteers: conint(ge=0) | None = None
     image_path: str | None = None
+
+    model_config = {
+        "json_encoders": {
+            datetime: lambda v: int(v.timestamp())
+        }
+    }
 
 
 class EventCreate(EventBase):
@@ -68,3 +75,8 @@ class EventResponse(EventBase):
     model_config = {
         "from_attributes": True,
     }
+
+
+class EventTimeInterval(BaseModel):
+    since: int
+    until: int

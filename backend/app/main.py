@@ -38,20 +38,13 @@ async def custom_http_exception_handler(request: Request, exc: APIException):
         },
     )
 
+dist_dir = "frontend/dist"
+index_file = os.path.join(dist_dir, "index.html")
 
 app.include_router(api_v1_router)
 
-dist_dir = "frontend/dist"
-index_file = os.path.join(dist_dir, "index.html")
-public_dir = "frontend/public"
-
-app.mount("/public", StaticFiles(directory=public_dir), name="public")
-
-try:
-    app.mount("/assets", StaticFiles(directory=os.path.join(dist_dir, "assets")), name="assets")
-except BaseException as e:
-    traceback.print_exc()
-
+app.mount("/assets", StaticFiles(directory=os.path.join(dist_dir, "assets")), name="assets")
+app.mount("/public", StaticFiles(directory=dist_dir), name="public")
 
 @app.get("/{full_path:path}", include_in_schema=False)
 async def serve_frontend(full_path: str):

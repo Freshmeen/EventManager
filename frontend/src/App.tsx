@@ -1,33 +1,19 @@
-import { useAction, useAtom } from '@reatom/npm-react'
-import { useEffect } from 'react'
-import './App.css'
-import { callPopup, userTypeAtom } from './model/actions'
-import { BasePopup } from './popups/BasePopup/basePopup'
-import { MainPage } from './views/MainPage/mainPage'
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import Base from "./base/Base";
+import "./App.css"
+import MainPage from "./events/mainPage/MainPage";
 
-function App() {
-  const [userType] = useAtom(userTypeAtom)
-  const callLoginPopup = useAction(callPopup)
+export default function App() {
+    console.log("App rendered");
+    return (
+        <>
+            {/*<Helmet>*/}
+            {/*    <title>Event Manager</title>*/}
+            {/*    <meta name="description" content="Приложение для управления событиями"/>*/}
+            {/*</Helmet>*/}
+            <Base>
+                <MainPage/>
+            </Base>
+        </>
 
-  useEffect(() => {
-    if (userType == null) {
-      callLoginPopup("login")
-    }
-  }, [userType, callLoginPopup])
-
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route 
-          path="/" 
-          element={<Navigate to={userType ? "/main" : "/login"} replace />} 
-        />
-        <Route path="/login" element={<BasePopup />} />
-        <Route path="/main" element={<MainPage />} />
-      </Routes>
-    </BrowserRouter>
-  )
+    );
 }
-
-export default App

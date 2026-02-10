@@ -1,0 +1,52 @@
+.field {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    height: 48px;
+    border-radius: 22px;
+    border: 1px solid var(--grey-color);
+    padding: 0 16px 0 33px;
+    box-sizing: border-box;
+    width: max-content;
+    flex: 1;
+    max-width: 700px;
+}
+
+.field:hover {
+    border-color: var(--dark-grey-color);
+}
+
+.field:focus-within {
+    border-color: var(--accent-color);
+}
+
+.input {
+    border: none;
+    outline: none;
+    padding: 0 0;
+    display: block;
+    font-size: 20px;
+    font-family: var(--default-font), sans-serif;
+    height: 100%;
+    flex: 1;
+}
+
+.input::placeholder {
+    color: var(--grey-color);
+    font-family: var(--default-font), sans-serif;
+    font-size: 20px;
+}
+
+.icon {
+    cursor: pointer;
+    fill: var(--grey-color);
+}
+
+.icon:hover {
+    fill: var(--dark-grey-color);
+}
+
+.icon:active {
+    fill: var(--accent-color);
+}

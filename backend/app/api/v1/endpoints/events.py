@@ -1,10 +1,12 @@
+import asyncio
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from backend.app.api.v1.deps.auth import get_current_user, auth_required
-from backend.app.api.v1.models.event import EventCreateResponse, EventCreate, EventResponse, EventUpdate
+from backend.app.api.v1.models.event import EventCreateResponse, EventCreate, EventResponse, EventUpdate, \
+    EventTimeInterval
 from backend.app.database.models import User
 from backend.app.database.models.data import UserPermission
 from backend.app.database.session import get_db
@@ -96,6 +98,18 @@ async def reject_event(
 )
 async def list_events(service: EventService = Depends(get_event_service)):
     return await service.list_all()
+
+
+@router.post(
+    "/time-interval",
+    response_model=list[EventResponse],
+    summary="List all events",
+    response_model_exclude_none=True,
+)
+async def list_events_by_time_interval(
+        event_time_interval: EventTimeInterval,
+        service: EventService = Depends(get_event_service)):
+    return await service.list_by_time_interval(event_time_interval.since, event_time_interval.until)
 
 
 @router.patch(

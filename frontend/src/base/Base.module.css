@@ -1,0 +1,43 @@
+.base {
+    font-family: var(--default-font), sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.main {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    scrollbar-gutter: stable;
+}
+
+.header {
+    background-color: #0000;
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 0 24px;
+}
+
+.header h1 {
+    font-size: 32px;
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+.authButton {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--accent-color);
+}
+
+.authButton span {
+    margin-right: 10px;
+}
+
+.authButton svg {
+    vertical-align: middle;
+}

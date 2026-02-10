@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+:root {
+    --accent-color: #FA5D21;
+    --grey-color: #9e9e9e;
+    --dark-grey-color: #616161;
+    --light-grey-color: #eee;
+    --skeleton-color: #8882;
+    --white-color: #fff;
+    --default-font: Inter;
+    --text-color: #333;
+}

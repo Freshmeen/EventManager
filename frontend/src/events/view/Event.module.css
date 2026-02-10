@@ -1,0 +1,154 @@
+.event {
+    max-width: 1120px;
+    min-width: 800px;
+    width: 100%;
+    height: 240px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.event * {
+    font-family: var(--default-font), sans-serif;
+}
+
+.event .name {
+    font-size: 24px;
+    min-height: 24px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    margin: 0 0 13px 0;
+    line-height: 24px;
+}
+
+.event .description {
+    font-size: 16px;
+    color: var(--text-color);
+    font-weight: 300;
+    text-overflow: ellipsis;
+    max-height: 115px;
+    margin: 0;
+}
+
+.image {
+    width: 320px;
+    height: 220px;
+    border-radius: 15px;
+    object-fit: cover;
+}
+
+.event .info {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    padding: 12px 12px 12px 22px;
+    flex: 1;
+}
+
+.event .eventInfo {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    color: var(--text-color);
+}
+
+.event .organizationInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: right;
+}
+
+.startsAt {
+    font-size: 20px;
+    min-height: 20px;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.skeleton .image {
+    background-color: var(--skeleton-color);
+}
+
+.skeleton .name {
+    display: block;
+    background-color: var(--skeleton-color);
+}
+
+.skeleton .description {
+    display: block;
+    background-color: var(--skeleton-color);
+    height: 115px;
+}
+
+.skeleton .startsAt {
+    display: block;
+    background-color: var(--skeleton-color);
+    color: #0000;
+}
+
+.eventPreview {
+    max-width: 1120px;
+    min-width: 800px;
+    width: 100%;
+    height: 700px;
+    border-radius: 15px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    box-sizing: border-box;
+    margin: 10px;
+    background-size: cover;
+}
+
+.eventPreview .name {
+    font-size: 32px;
+    font-weight: 500;
+    color: var(--white-color);
+    margin: 0 0 11px 0;
+}
+
+.eventPreview .description {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--white-color);
+    max-height: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0 0 26px 0;
+}
+
+.eventPreview .bottomPanel {
+    height: 36px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 22px;
+}
+
+.eventPreview .organizationInfo {
+    height: 36px;
+    border-radius: 18px;
+    background-color: color-mix(in srgb, var(--white-color) 10%, transparent);
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 14px;
+}
+
+.eventPreview .at {
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--white-color);
+}
+
+.skeleton .at {
+    display: block;
+    background-color: var(--skeleton-color);
+    color: #0000;
+}
